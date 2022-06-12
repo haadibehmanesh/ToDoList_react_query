@@ -38,7 +38,7 @@ const ToDoList = () => {
             queryClient.invalidateQueries("todos")
         }
     })
-    
+
     const handleSubmit = (e) => {
         e.preventDefault()
         addTodoMutation.mutate({ userId: 1, title: newTodo, completed: false })
@@ -62,6 +62,35 @@ const ToDoList = () => {
             </button>
         </form>
     )
+    
+    let content
+    if (isLoading) {
+        content = <p>Loading...</p>
+    } else if (isError) {
+        content = <p>{error.message}</p>
+    } else {
+        content = todos.map((todo) => {
+            return (
+                <article key={todo.id}>
+                    <div className="todo">
+                        <input
+                            type="checkbox"
+                            checked={todo.completed}
+                            id={todo.id}
+                            onChange={() =>
+                                updateTodoMutation.mutate({ ...todo, completed: !todo.completed })
+                            }
+                        />
+                        <label htmlFor={todo.id}>{todo.title}</label>
+                    </div>
+                    <button className="trash" onClick={() => deleteTodoMutation.mutate({ id: todo.id })}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                </article>
+            )
+        })
+    }
+
 
   return (
     <div>ToDoList</div>
