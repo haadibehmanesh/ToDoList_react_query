@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons"
 import { useState } from 'react'
 
-const ToDoList = () => {
+const TodoList = () => {
     const [newTodo, setNewTodo] = useState('')
     const queryClient = useQueryClient()
-    
+
     const {
         isLoading,
         isError,
@@ -17,7 +17,7 @@ const ToDoList = () => {
     } = useQuery('todos', getTodos, {
         select: data => data.sort((a, b) => b.id - a.id)
     })
-    
+
     const addTodoMutation = useMutation(addTodo, {
         onSuccess: () => {
             // Invalidates cache and refetch 
@@ -62,7 +62,7 @@ const ToDoList = () => {
             </button>
         </form>
     )
-    
+
     let content
     if (isLoading) {
         content = <p>Loading...</p>
@@ -92,9 +92,14 @@ const ToDoList = () => {
     }
 
 
-  return (
-    <div>ToDoList</div>
-  )
+    return (
+        <main>
+            <h1>Todo List</h1>
+            {newItemSection}
+            {content}
+        </main>
+    )
+
 }
 
-export default ToDoList
+export default TodoList

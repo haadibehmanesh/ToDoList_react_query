@@ -1,6 +1,8 @@
+import TodoList from "./features/todos/TodoList";
+
 function App() {
   return (<>
-  Hello
+  <TodoList/>
   </>
   )
 }
