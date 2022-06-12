@@ -24,7 +24,7 @@ const ToDoList = () => {
             queryClient.invalidateQueries("todos")
         }
     })
-    
+
     const updateTodoMutation = useMutation(updateTodo, {
         onSuccess: () => {
             // Invalidates cache and refetch 
@@ -38,6 +38,30 @@ const ToDoList = () => {
             queryClient.invalidateQueries("todos")
         }
     })
+    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        addTodoMutation.mutate({ userId: 1, title: newTodo, completed: false })
+        setNewTodo('')
+    }
+
+    const newItemSection = (
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="new-todo">Enter a new todo item</label>
+            <div className="new-todo">
+                <input
+                    type="text"
+                    id="new-todo"
+                    value={newTodo}
+                    onChange={(e) => setNewTodo(e.target.value)}
+                    placeholder="Enter new todo"
+                />
+            </div>
+            <button className="submit">
+                <FontAwesomeIcon icon={faUpload} />
+            </button>
+        </form>
+    )
 
   return (
     <div>ToDoList</div>
